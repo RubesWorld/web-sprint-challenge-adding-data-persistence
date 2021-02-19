@@ -24,7 +24,7 @@ exports.up = function (knex) {
       tbl.text("resource_name", 128).unique().notNullable();
       tbl.text("resource_description");
     })
-    .createTable("Resource_Assignment", (tbl) => {
+    .createTable("project_resources", (tbl) => {
       tbl.increments("assignment_id");
       tbl
         .integer("project_id")
@@ -45,7 +45,7 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
   return knex.schema
-    .dropTableIfExists("Resource_Assignment")
+    .dropTableIfExists("project_resources")
     .dropTableIfExists("Resources")
     .dropTableIfExists("Tasks")
     .dropTableIfExists("Projects");
