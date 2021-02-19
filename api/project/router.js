@@ -13,4 +13,16 @@ router.get("/", (req, res) => {
     });
 });
 
+router.post("/", (req, res) => {
+  const newProject = req.body;
+
+  Project.add(newProject)
+    .then((projects) => {
+      res.status(201).json(projects);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Error adding project" });
+    });
+});
+
 module.exports = router;
