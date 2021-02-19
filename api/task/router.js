@@ -1,6 +1,7 @@
 // build your `/api/tasks` router here
 const express = require("express");
 
+const mw = require("../middleware/middleware");
 const Task = require("./model");
 const router = express.Router();
 
@@ -14,14 +15,14 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", mw.validateTask, mw.logger, (req, res) => {
   const newTask = req.body;
   Task.add(newTask)
     .then((task) => {
       res.status(201).json(task);
     })
     .catch((err) => {
-      res.status(401).json({ message: "Error Adding Task" });
+      res.status(404).json({ message: "Error Adding Task" });
     });
 });
 

@@ -1,9 +1,9 @@
 const express = require("express");
-
+const mw = require("../middleware/middleware");
 const Project = require("./model");
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get("/", mw.logger, (req, res) => {
   Project.find()
     .then((project) => {
       res.status(201).json(project);
@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", mw.validateProject, mw.logger, (req, res) => {
   const newProject = req.body;
 
   Project.add(newProject)
